@@ -1,10 +1,13 @@
 package com.university.exam8.ui.dataLoader
 
 import android.util.Log.d
+import android.util.Log.i
 import android.view.View
 import com.university.exam8.ui.interfaces.FutureCallBack
 import com.university.exam8.App
 import com.university.exam8.R
+import com.university.exam8.bean.NewsModel
+import com.university.exam8.ui.dataLoader.DataLoader.RetrofitApi.Companion.BASE_URL
 import com.university.exam8.ui.tools.Tools
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -12,6 +15,8 @@ import org.json.JSONException
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.converter.scalars.ScalarsConverterFactory
 import retrofit2.http.*
 
 object DataLoader {
@@ -25,6 +30,8 @@ object DataLoader {
     private const val HTTP_204_NO_CONTENT = 204
 
     private var retrofit = Retrofit.Builder()
+        .baseUrl(BASE_URL)
+        .addConverterFactory(ScalarsConverterFactory.create())
         .build()
 
     private var api = retrofit.create(RetrofitApi::class.java)

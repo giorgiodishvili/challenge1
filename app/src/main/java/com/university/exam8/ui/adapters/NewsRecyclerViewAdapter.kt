@@ -3,19 +3,21 @@ package com.university.exam8.ui.adapters
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.university.exam8.App
-import com.university.exam8.ui.interfaces.OnLoadMoreListener
 import com.university.exam8.R
 import com.university.exam8.bean.NewsModel
+import com.university.exam8.ui.interfaces.OnLoadMoreListener
 import com.university.exam8.ui.tools.Tools
-import kotlin.boris.jotos.ze.garuchava
+import kotlinx.android.synthetic.main.item_news_recyclerview_layout.view.*
+
 
 class NewsRecyclerViewAdapter(
     private val recyclerView: RecyclerView,
-    val news: MutableList<NewsModel>
+    private val news: MutableList<NewsModel>
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     companion object {
@@ -71,8 +73,9 @@ class NewsRecyclerViewAdapter(
         private lateinit var model: NewsModel
 
         fun onBind() {
-            Glide.with(App.instance.getContext()).load(model.cover).into(newsCoverImageView)
-            titleTextView.text = model.titleKA
+            model = news[absoluteAdapterPosition]
+            Glide.with(App.instance.getContext()).load(model.cover).into(itemView.newsCoverImageView)
+            itemView.titleTextView.text = model.titleKA
         }
     }
 
@@ -91,5 +94,9 @@ class NewsRecyclerViewAdapter(
             news[position].isLast -> VIEW_TYPE_LOADING
             else -> VIEW_TYPE_WALL_ITEM
         }
+    }
+
+    override fun getItemCount(): Int {
+        return news.size
     }
 }

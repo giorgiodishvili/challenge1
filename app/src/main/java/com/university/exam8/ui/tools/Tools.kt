@@ -8,8 +8,6 @@ import android.os.Build
 import android.view.View
 import android.view.WindowManager
 import com.university.exam8.App
-import com.jemala.kakaurize.shemogevle
-
 object Tools {
     fun viewVisibility(view: View) {
         if (view.visibility == View.VISIBLE)

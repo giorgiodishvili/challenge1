@@ -13,8 +13,6 @@ import com.university.exam8.ui.adapters.NewsRecyclerViewAdapter
 import com.university.exam8.ui.dataLoader.DataLoader
 import com.university.exam8.ui.interfaces.OnLoadMoreListener
 import kotlinx.android.synthetic.main.activity_news.*
-import kotlin.jemala.zauri.bla
-
 class NewsActivity : AppCompatActivity() {
 
     private lateinit var newsRecyclerViewAdapter: NewsRecyclerViewAdapter
@@ -23,8 +21,10 @@ class NewsActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_news)
+        loadNews("")
         init()
     }
+
 
     private fun init() {
         newsRecyclerView.layoutManager =
@@ -34,6 +34,7 @@ class NewsActivity : AppCompatActivity() {
                 newsRecyclerView,
                 news
             )
+        newsRecyclerView.adapter = newsRecyclerViewAdapter
         newsRecyclerViewAdapter.setOnLoadMoreListener(loadMoreListener)
     }
 
@@ -59,7 +60,7 @@ class NewsActivity : AppCompatActivity() {
         if (lastNewsId.isNotEmpty())
             parameters["lastId"] = lastNewsId
         DataLoader.getRequest(
-            null,
+            progressBar,
             ApiMethod.news,
             parameters,
             object : FutureCallBack<String> {
